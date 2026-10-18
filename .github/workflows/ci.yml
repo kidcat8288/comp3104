@@ -4,8 +4,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the "main" branch
-
+  # Triggers the workflow on pull request events
   pull_request:
     branches: ["master"]
 
@@ -19,10 +18,15 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Required permission to push to the gh-pages branch
+    permissions:
+      contents: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
-  steps:
+    steps:
+      # Step 1: Checkout code
       - name: Checkout code
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       # Step 2: Set up the Node.js environment
       - name: Setup Node.js
@@ -30,13 +34,14 @@ jobs:
         with:
           node-version: "22" # Specify your required Node version
 
-
-       -name: Cache Node.js modules
+      # Cache Node modules
+      - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: node_modules # Take any latest cache if failed to find it for current package-lock.json
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -49,7 +54,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Step 5 : Deploy to GitHub Pages
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
