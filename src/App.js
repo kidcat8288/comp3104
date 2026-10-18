@@ -14,6 +14,7 @@ const App = () => {
     <div className="App">
       <h1>Student Information System</h1>
       <h1>Welcome to CI/CD Course</h1>
+      <h2>Happy Learning!</h2>
       <h5>Developed By: 101568394 || Camille Yu || DevOps</h5>
       <StudentForm addStudent={addStudent} />
       <StudentList students={students} />
