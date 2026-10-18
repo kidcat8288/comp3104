@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/kidcat8288/comp3104/issues"
   },
-  "homepage": "https://github.com/kidcat8288/comp3104",
+  "homepage": "https://kidcat8288.github.io/comp3104",
   "dependencies": {
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^6.9.1",

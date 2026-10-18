@@ -1,13 +1,13 @@
-
 name: CI - Node Project Setup
+
+run-name: ${{ github.actor }} is testing out GitHub Actions
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
+  # Triggers the workflow on pull request events but only for the "main" branch
+
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,8 +28,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # Specify your required Node version
-          cache: 'npm'       # Automatically caches npm dependencies
+          node-version: "22" # Specify your required Node version
+          cache: "npm" # Automatically caches npm dependencies
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -38,3 +38,13 @@ jobs:
       # Step 4: Run tests
       - name: Run tests
         run: npm test
+
+      # Step 5 : Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
